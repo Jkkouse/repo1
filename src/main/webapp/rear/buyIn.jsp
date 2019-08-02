@@ -266,7 +266,7 @@
             dataType: "text",
             success: function (data) {
                 if(data == "true"){
-                    alert(true)
+                    alert("提交成功")
                     $("#submit").prop("disabled",true)
                 }else{
                     alert("提交失败")

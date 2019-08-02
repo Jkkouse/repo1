@@ -35,4 +35,14 @@ public class PurServiceImpl implements PurService {
     public List<Map> selAllPurOrder() {
         return purDao.selAllPurOrder();
     }
+
+    @Override
+    public List<Map> selAllPurDetail() {
+        return purDao.selAllPurDetail();
+    }
+
+    @Override
+    public void sh(String purno, String purstatus) {
+        purDao.sh(purno,purstatus);
+    }
 }

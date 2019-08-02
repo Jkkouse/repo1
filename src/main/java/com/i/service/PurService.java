@@ -10,4 +10,8 @@ public interface PurService {
     public boolean addPur(Map map);
 
     public List<Map> selAllPurOrder();
+
+    public List<Map> selAllPurDetail();
+
+    public void sh(String purno,String purstatus);
 }

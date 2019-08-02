@@ -56,4 +56,17 @@ public class PurController {
     public List<Map> selAllPurOrder(){
         return purService.selAllPurOrder();
     }
+
+    @RequestMapping("/selAllPurDetail")
+    @ResponseBody
+    public List<Map> selAllPurDetail(){
+        return purService.selAllPurDetail();
+    }
+
+    @RequestMapping("/sh")
+    @ResponseBody
+    public String sh(String purno,String purstatus){
+        purService.sh(purno,purstatus);
+        return "成功";
+    }
 }
