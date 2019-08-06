@@ -45,4 +45,19 @@ public class PurServiceImpl implements PurService {
     public void sh(String purno, String purstatus) {
         purDao.sh(purno,purstatus);
     }
+
+    @Override
+    public int getPageCount() {
+        return purDao.getPageCount();
+    }
+
+    @Override
+    public List<Map> tgshQuery(Integer currIndex, Integer pagesize) {
+        return purDao.tgshQuery(currIndex,pagesize);
+    }
+
+    @Override
+    public List<Map> getPurDetailBypurno(String purno) {
+        return purDao.getPurDetailBypurno(purno);
+    }
 }

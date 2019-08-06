@@ -69,4 +69,38 @@ public class PurController {
         purService.sh(purno,purstatus);
         return "成功";
     }
+
+    @RequestMapping("/getPageCount")
+    @ResponseBody
+    public int getPageCount(Integer pagesize){
+
+        //总数 - 页数 * 每页容量 > 0 则 + 1 页 因为除法是向下取整
+        if (0 < purService.getPageCount() - (purService.getPageCount() / pagesize) * pagesize){
+            return purService.getPageCount() / pagesize + 1;
+        }else if(purService.getPageCount() == 0){
+            return 0;
+        }else{
+            return purService.getPageCount() / pagesize;
+        }
+    }
+
+    @RequestMapping("/tgshQuery")
+    @ResponseBody
+    public List<Map> tgshQuery(Integer currpage,Integer pagesize){
+        System.out.println(currpage);
+        System.out.println(pagesize);
+        //当前条数index
+        Integer currIndex = (currpage - 1) * pagesize;
+        System.out.println(purService.tgshQuery(currIndex,pagesize));
+        return purService.tgshQuery(currIndex,pagesize);
+    }
+
+    /**
+     * 根据purno获取订单详情
+     */
+    @RequestMapping("/getPurDetailBypurno")
+    @ResponseBody
+    public List<Map> getPurDetailBypurno(String purno){
+        return purService.getPurDetailBypurno(purno);
+    }
 }

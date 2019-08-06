@@ -162,7 +162,7 @@
 
     function appendGoods(){
         for (var i = 0; i < ggd.length; i++){
-            var option = "<option value='"+ggd[i].goodsno+"' name='goodsname'>" + ggd[i].goodsname + "</option>"
+            var option = "<option value='"+ggd[i].goodsname+"' name='goodsname'>" + ggd[i].goodsname + "</option>"
             $("#mytbody .goodsselect").eq(count).append(option)
         }
         count++
@@ -183,7 +183,7 @@
 
     $("#mytbody").on("change",".goodsselect",function () {
         for(var i in ggd){
-            if(ggd[i].goodsno == $(this).val()){
+            if(ggd[i].goodsname == $(this).val()){
                 $(this).parent().parent().find("td").eq(0).html(ggd[i].goodsno)
                 $(this).parent().parent().find("td").eq(2).html(ggd[i].goodsspec)
                 $(this).parent().parent().find("td").eq(3).html(ggd[i].typename)
@@ -243,6 +243,8 @@
             }
             good.purno = purno                                                      //采购单编号
             good.goodsno = $(this).children("td").eq(0).html()                     //商品编号
+            good.goodsname = $(this).find(".goodsselect").val()                   //商品名称
+            good.goodstype = $(this).children("td").eq(3).html()                  //类型名称
             good.puramount = $(this).find("input").val()                          //采购数量
             good.subtotal = $(this).children("td").eq(11).html()                  //小计
             goodsarr.push(good)

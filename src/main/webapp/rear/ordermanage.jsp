@@ -142,6 +142,8 @@
             "                            <thead>\n" +
             "                                <th>采购单编号</th>\n" +
             "                                <th>商品编号</th>\n" +
+            "                                <th>商品名称</th>\n" +
+            "                                <th>商品类型</th>\n" +
             "                                <th>采购数量</th>\n" +
             "                                <th>小计</th>\n" +
             "                                <th>创建时间</th>\n" +
@@ -186,19 +188,25 @@
             var tr = "<tr>"
             tr += "<td>"+detaillist[i].purno+"</td>"
             tr += "<td>"+detaillist[i].goodsno+"</td>"
+            tr += "<td>"+detaillist[i].goodsname+"</td>"
+            tr += "<td>"+detaillist[i].goodstype+"</td>"
             tr += "<td>"+detaillist[i].puramount+"</td>"
             tr += "<td>"+detaillist[i].subtotal+"</td>"
             tr += "<td>"+detaillist[i].createtime+"</td>"
             tr += "</tr>"
             $("#modaltbody").append(tr)
         }
+        var statustext = $(this).parents("tr").find("td").eq(7).html()
         //根据订单状态禁用按钮,避免重复点击之前的操作
-        if($(this).parents("tr").find("td").eq(7).html() == "通过审核"){
+        if(statustext == "通过审核"){
             $(".tgsh").prop("disabled",true)
             $(".wtgsh").prop("disabled",false)
-        }else if($(this).parents("tr").find("td").eq(7).html() == "未通过审核"){
+        }else if(statustext == "未通过审核"){
             $(".tgsh").prop("disabled",false)
             $(".wtgsh").prop("disabled",true)
+        }else if(statustext == '采购完成'){
+            $(".tgsh").prop("disabled",false)
+            $(".wtgsh").prop("disabled",false)
         }
     })
 

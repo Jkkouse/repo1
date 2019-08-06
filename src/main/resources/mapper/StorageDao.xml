@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.i.dao.StorageDao">
+    <!--添加入库总表-->
+    <insert id="addSreTotal" parameterType="java.util.Map">
+        insert into tab_total_storage (storageno,storagetime,operator,forwardingunit)
+        <if test="json.get('storagetime') != null and json.get('storagetime') != ''">
+            values(#{storageno},#{storagetime},#{operator},#{forwardingunit})
+        </if>
+        <if test="json.get('storagetime') == null or json.get('storagetime') == ''">
+            values(#{storageno},now(),#{operator},#{forwardingunit})
+        </if>
+    </insert>
+
+    <!--添加入库详情表-->
+    <insert id="addSreDetail" parameterType="java.util.List">
+        insert into tab_detail_storage (storageno,storagegoods,storagegoodsno,storagegoodstype,storageamount,purno)
+        values
+        <foreach collection="sreList" item="item" separator=",">
+            (#{storageno},#{storagegoods},#{storagegoodsno},#{storagegoodstype},#{storageamount},#{purno})
+        </foreach>
+    </insert>
+</mapper>
