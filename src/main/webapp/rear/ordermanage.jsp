@@ -45,11 +45,17 @@
     var orderdata
     //订单详情数据
     var detaildata
+    //更新前的数据
+    var olddata
+
+    var j = 0
 
     $(function () {
         selAllPurOrder()
-        selAllPurDetail()
         loadModal()
+        setInterval(function () {
+            selAllPurOrder()
+        },1000)
     })
 
     //从服务器获取所有订单总表数据,并填充到html
@@ -59,23 +65,29 @@
             type: "post",
             dataType: "json",
             success: function (data) {
-                orderdata = data
-                //重新加载时清空之前动态生成的列表的
-                $("#mytbody").html("")
+                if(olddata != data) {
+                    //全局订单数据
+                    orderdata = data
+                    //当列表和之前不同时,更新详情数据
+                    selAllPurDetail()
+                    //重新加载时清空之前动态生成的列表的
+                    $("#mytbody").html("")
 
-                for (var i in data){
-                    var tr = "<tr>"
-                    tr+= "<td>"+data[i].purno+"</td>"
-                    tr+= "<td>"+data[i].purman+"</td>"
-                    tr+= "<td>"+data[i].applydep+"</td>"
-                    tr+= "<td>"+data[i].applyman+"</td>"
-                    tr+= "<td>"+data[i].description+"</td>"
-                    tr+= "<td>"+data[i].buymoney+"</td>"
-                    tr+= "<td>"+data[i].createtime+"</td>"
-                    tr+= "<td>"+data[i].purstatus+"</td>"
-                    tr+= "<td><button type='button' class='btn btn-primary modal-btn' data-toggle='modal' data-target='#myModal' value='"+data[i].purno+"'>查看订单详情</button></td>"
-                    tr+= "</tr>"
-                    $("#mytbody").append(tr)
+                    for (var i in data) {
+                        var tr = "<tr>"
+                        tr += "<td>" + data[i].purno + "</td>"
+                        tr += "<td>" + data[i].purman + "</td>"
+                        tr += "<td>" + data[i].applydep + "</td>"
+                        tr += "<td>" + data[i].applyman + "</td>"
+                        tr += "<td>" + data[i].description + "</td>"
+                        tr += "<td>" + data[i].buymoney + "</td>"
+                        tr += "<td>" + data[i].createtime + "</td>"
+                        tr += "<td>" + data[i].purstatus + "</td>"
+                        tr += "<td><button type='button' class='btn btn-primary modal-btn' data-toggle='modal' data-target='#myModal' value='" + data[i].purno + "'>查看订单详情</button></td>"
+                        tr += "</tr>"
+                        $("#mytbody").append(tr)
+                    }
+                    olddata = data
                 }
             }
         })
@@ -204,11 +216,6 @@
                 })
             }
         })
-    }
-
-    //在顶层页面加载模态框
-    function windowloadmodal() {
-        //var doc = $(window.top.)
     }
 </script>
 </html>

@@ -74,7 +74,7 @@
         <div class="row">
             <div class="col-xs-3 col-xs-offset-9">
                 <button type="button" class="btn btn-default btn-lg" id="addgoods">添加商品</button>
-                <button class="btn btn-primary btn-lg" id="submit" type="reset">提交</button>
+                <button class="btn btn-primary btn-lg" id="submit" type="button">提交</button>
             </div>
         </div>
 
@@ -271,13 +271,13 @@
             data: JSON.stringify(jsonstr),
             dataType: "text",
             success: function (data) {
-                $("#mytbody").empty()
                 if(data == "true"){
                     alert("提交成功")
                     $("#submit").prop("disabled",true)
                 }else{
                     alert("提交失败")
                 }
+                window.location.reload()
             }
         })
     }

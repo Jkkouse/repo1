@@ -51,4 +51,13 @@ public class MenuController {
     public String toOrderHandler(){
         return "rear/orderhandler";
     }
+
+    /**
+     * 去采购退货
+     * @return
+     */
+    @RequestMapping("/toOrderReturn")
+    public String toOrderReturn(){
+        return "rear/orderreturn";
+    }
 }

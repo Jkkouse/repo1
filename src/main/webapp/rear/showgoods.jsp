@@ -41,40 +41,46 @@
 </table>
 </body>
 <script>
+
+    var olddata
+
     window.onload = function(){
         selectAllGoods()
+        refreshOrder()
     }
 
     //查询所有商品信息(包含类型表)
     function selectAllGoods(){
-        $("#mytbd").html(null)
         $.ajax({
             url: "goods/selAllGoods",
             type: "post",
             dataType: "json",
             success: function(data){
-                for(var i=0;i<data.length;i++){
-                    var tr="<tr>"
-                    tr+="<td>"+data[i].typeid+"</td>";
-                    tr+="<td>"+data[i].goodsno+"</td>";
-                    tr+="<td>"+data[i].goodsname+"</td>";
-                    tr+="<td>"+data[i].goodsspec+"</td>";
-                    tr+="<td>"+data[i].purchaseprice+"</td>";
-                    tr+="<td>"+data[i].unitsalesprice+"</td>";
-                    tr+="<td>"+data[i].suggestedretailprice+"</td>";
-                    tr+="<td>"+data[i].origin+"</td>";
-                    tr+="<td>"+data[i].measurement+"</td>";
-                    tr+="<td>"+data[i].inventory+"</td>";
-                    tr+="<td>"+data[i].typename+"</td>";
-                    tr+="<td><button  class='btn btn-primary' value='"+data[i].goodsno+"' id='delGoods'>删除</button>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-                        "<button class='btn btn-primary'value='"+data[i].goodsno+"' type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\" id='modal-btn'>修改</button>" +
-                        "</td>";
-                    tr+="</tr>";
-                    $("#mytbd").append(tr);
+                    $("#mytbd").html(null)
+                    for(var i=0;i<data.length;i++){
+                        var tr="<tr>"
+                        tr+="<td>"+data[i].typeid+"</td>";
+                        tr+="<td>"+data[i].goodsno+"</td>";
+                        tr+="<td>"+data[i].goodsname+"</td>";
+                        tr+="<td>"+data[i].goodsspec+"</td>";
+                        tr+="<td>"+data[i].purchaseprice+"</td>";
+                        tr+="<td>"+data[i].unitsalesprice+"</td>";
+                        tr+="<td>"+data[i].suggestedretailprice+"</td>";
+                        tr+="<td>"+data[i].origin+"</td>";
+                        tr+="<td>"+data[i].measurement+"</td>";
+                        tr+="<td>"+data[i].inventory+"</td>";
+                        tr+="<td>"+data[i].typename+"</td>";
+                        tr+="<td><button  class='btn btn-primary' value='"+data[i].goodsno+"' id='delGoods'>删除</button>" + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "<button class='btn btn-primary'value='"+data[i].goodsno+"' type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\" id='modal-btn'>修改</button>" +
+                            "</td>";
+                        tr+="</tr>";
+                        $("#mytbd").append(tr);
                 }
             }
         })
     }
+
+
 
 </script>
 </html>

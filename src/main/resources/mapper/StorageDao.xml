@@ -15,9 +15,9 @@
 
     <!--添加入库详情表-->
     <insert id="addSreDetail" parameterType="java.util.List">
-        insert into tab_detail_storage(storageno,storagegoods,storagegoodsno,storagegoodstype,storageamount,purno) values
+        insert into tab_detail_storage(storageno,storagegoods,storagegoodsno,storagegoodstype,storageamount,purno,isback) values
         <foreach collection="list" item="item" separator=",">
-            (#{item.storageno},#{item.storagegoods},#{item.storagegoodsno},#{item.storagegoodstype},#{item.storageamount},#{item.purno})
+            (#{item.storageno},#{item.storagegoods},#{item.storagegoodsno},#{item.storagegoodstype},#{item.storageamount},#{item.purno},'未退货')
         </foreach>
     </insert>
 
