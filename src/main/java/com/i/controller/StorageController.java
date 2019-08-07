@@ -42,11 +42,14 @@ public class StorageController {
         return No;
     }
 
+    /**
+     * 商品入库
+     * @param json
+     * @return
+     */
     @RequestMapping("/setSreOrder")
     @ResponseBody
     public String setSreOrder(@RequestBody Map json){
-        List<Map> sreList = (List<Map>) json.get("storagearr");
-        System.out.println(sreList);
-        return "提交成功";
+        return storageService.addSreTotalDetail(json);
     }
 }

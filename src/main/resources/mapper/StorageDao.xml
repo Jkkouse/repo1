@@ -4,21 +4,31 @@
 <mapper namespace="com.i.dao.StorageDao">
     <!--添加入库总表-->
     <insert id="addSreTotal" parameterType="java.util.Map">
-        insert into tab_total_storage (storageno,storagetime,operator,forwardingunit)
-        <if test="json.get('storagetime') != null and json.get('storagetime') != ''">
-            values(#{storageno},#{storagetime},#{operator},#{forwardingunit})
+        insert into tab_total_storage(storageno,storagetime,operator,forwardingunit) values
+        <if test="storagetime != null and storagetime != ''">
+            (#{storageno},#{storagetime},#{operator},#{forwardingunit})
         </if>
-        <if test="json.get('storagetime') == null or json.get('storagetime') == ''">
-            values(#{storageno},now(),#{operator},#{forwardingunit})
+        <if test="storagetime == null or storagetime == ''">
+            (#{storageno},now(),#{operator},#{forwardingunit})
         </if>
     </insert>
 
     <!--添加入库详情表-->
     <insert id="addSreDetail" parameterType="java.util.List">
-        insert into tab_detail_storage (storageno,storagegoods,storagegoodsno,storagegoodstype,storageamount,purno)
-        values
-        <foreach collection="sreList" item="item" separator=",">
-            (#{storageno},#{storagegoods},#{storagegoodsno},#{storagegoodstype},#{storageamount},#{purno})
+        insert into tab_detail_storage(storageno,storagegoods,storagegoodsno,storagegoodstype,storageamount,purno) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.storageno},#{item.storagegoods},#{item.storagegoodsno},#{item.storagegoodstype},#{item.storageamount},#{item.purno})
         </foreach>
     </insert>
+
+    <!--入库后相应商品库存增加-->
+    <update id="updateGoodsInv" >
+      update tab_goods set inventory = #{inventory} where goodsno = #{storagegoodsno}
+    </update>
+    <!--入库后采购详情表的验证状态为已验收-->
+    <update id="updatePurCaaStatus">
+        update tab_detail_purchase set caastatus = '已验收' where purno = #{purno} and goodsno = #{storagegoodsno}
+    </update>
+
+    <!--当一个订单的所有采购详情表为已验收时将其状态改为采购完成-->
 </mapper>

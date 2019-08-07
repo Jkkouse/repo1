@@ -155,9 +155,9 @@
     var purDetailData = null
 
     $(function () {
-        getPageCount(10)
+        getPageCount(5)
         btnPage()
-        tgshQuery(1,10)
+        tgshQuery(1,5)
         getSreCount()
     })
 
@@ -168,7 +168,7 @@
             return false;
         page--
         btnPage()
-        tgshQuery(page,10)
+        tgshQuery(page,5)
     })
 
     //下一页
@@ -177,7 +177,7 @@
             return false;
         page++
         btnPage()
-        tgshQuery(page,10)
+        tgshQuery(page,5)
     })
 
     //分页显示按钮状态控制
@@ -325,15 +325,18 @@
         var storagetime = $("[name=storagetime]").val()
         var operator = $("[name=operator]").val()
         var forwardingunit = $("[name=forwardingunit]").val()
-        var storageobj = new Object()
         var storagearr = new Array()
         $("#storagetbody tr").each(function () {
+            var storageobj = new Object()
+            //获取一行tr里的所有td
+            var thiso = $(this).children()
             storageobj.storageno = storageno
-            storageobj.storagegoods = $(this).children().eq(0).text()
-            storageobj.storagegoodsno = $(this).children().eq(1).text()
-            storageobj.storagegoodstype = $(this).children().eq(2).text()
-            storageobj.storageamount = $(this).children().eq(3).text()
-            storageobj.purno = $(this).children().eq(5).text()
+            storageobj.storagegoods = thiso.eq(0).text()
+            storageobj.storagegoodsno = thiso.eq(1).text()
+            storageobj.storagegoodstype = thiso.eq(2).text()
+            storageobj.storageamount = Number(thiso.eq(3).text())
+            storageobj.inventory = Number(thiso.eq(4).text())
+            storageobj.purno = thiso.eq(5).text()
             storagearr.push(storageobj)
         })
 
@@ -348,6 +351,7 @@
             dataType: "text",
             success: function (data) {
                 alert(data)
+                window.location.reload()
             }
         })
     })

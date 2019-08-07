@@ -27,7 +27,6 @@ public class PurServiceImpl implements PurService {
     public boolean addPur(Map map) {
         int num = purDao.addPurTotal(map);
         int num2 = purDao.addPurDetail((List<Map>) map.get("goodsarr"));
-        System.out.println(num +" "+num2);
         return (num > 0 && num2 > 0);
     }
 

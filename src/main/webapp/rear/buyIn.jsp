@@ -74,7 +74,7 @@
         <div class="row">
             <div class="col-xs-3 col-xs-offset-9">
                 <button type="button" class="btn btn-default btn-lg" id="addgoods">添加商品</button>
-                <button class="btn btn-primary btn-lg" id="submit" type="button">提交</button>
+                <button class="btn btn-primary btn-lg" id="submit" type="reset">提交</button>
             </div>
         </div>
 
@@ -246,6 +246,11 @@
             good.goodsname = $(this).find(".goodsselect").val()                   //商品名称
             good.goodstype = $(this).children("td").eq(3).html()                  //类型名称
             good.puramount = $(this).find("input").val()                          //采购数量
+            if($(this).find("input").val() == '' || $(this).find("input").val() < 0){
+                alert("请填写正确的商品数量")
+                flag = false;
+                return false;
+            }
             good.subtotal = $(this).children("td").eq(11).html()                  //小计
             goodsarr.push(good)
         })
@@ -254,7 +259,6 @@
         }
         var jsonstr = {"purno":purno,"purman":purman,"applydep":applydep,"applyman":applyman,"description":description,
         "buymoney":buymoney,"goodsarr":goodsarr}
-        alert(JSON.stringify(jsonstr))
         submitForm(jsonstr)
     })
 
@@ -267,6 +271,7 @@
             data: JSON.stringify(jsonstr),
             dataType: "text",
             success: function (data) {
+                $("#mytbody").empty()
                 if(data == "true"){
                     alert("提交成功")
                     $("#submit").prop("disabled",true)

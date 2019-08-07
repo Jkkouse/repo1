@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public interface PurDao {
     public int addPurDetail(List<Map> list);
 
     //获取所有订单数据
-    @Select("select * from tab_total_purchase")
+    @Select("select * from tab_total_purchase where purstatus <> '采购完成'")
     public List<Map> selAllPurOrder();
 
     //获取所有订单详情数据
@@ -45,5 +46,12 @@ public interface PurDao {
     //根据订单编号获取订单详情数据
     @Select("select * from tab_detail_purchase tdp join tab_goods tg on tdp.goodsno = tg.goodsno join tab_goodstype tgt on " +
             "tg.typeid = tgt.typeid where purno = #{purno}")
-    public List<Map> getPurDetailBypurno(@Param("purno") String purno);
+    public List<Map> getPurDetailBypurno(String purno);
+
+    //用purno查询采购订单的所有采购订单详情表的验收状态
+    @Select("select caastatus from tab_detail_purchase where purno = #{purno}")
+    public List<Map> getCaaStatusByPurno(String purno);
+
+    //用purno来更改采购订单为采购完成
+    public void updatePurStatus(String purno);
 }

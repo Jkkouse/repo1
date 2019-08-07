@@ -41,9 +41,7 @@ public class PurController {
     @RequestMapping("/submitForm")
     @ResponseBody
     public String submitForm(@RequestBody Map map){
-        System.out.println(map);
         boolean flag = purService.addPur(map);
-        System.out.println(flag);
         if(flag) {
             return "true";
         }else{
@@ -87,11 +85,8 @@ public class PurController {
     @RequestMapping("/tgshQuery")
     @ResponseBody
     public List<Map> tgshQuery(Integer currpage,Integer pagesize){
-        System.out.println(currpage);
-        System.out.println(pagesize);
         //当前条数index
         Integer currIndex = (currpage - 1) * pagesize;
-        System.out.println(purService.tgshQuery(currIndex,pagesize));
         return purService.tgshQuery(currIndex,pagesize);
     }
 
